@@ -1,0 +1,713 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en-ph">
+<head>
+
+  <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
+  <title>Power Management Control</title>
+
+
+  <script>
+strLED1 = "";
+strLED2 = "";
+strAUTO1="";
+strAUTO2="";
+strMODE10 = "";
+strMODE11 = "";
+strMODE12 = "";
+strMODE13 = "";
+strMODE14 = "";
+strMODE15 = "";
+strMODE16 = "";
+strMODE17 = "";
+strMODE18 = "";
+strMODE19 = "";
+strMODE20 = "";
+strMODE21 = "";
+strMODE22 = "";
+strMODE23 = "";
+strMODE24 = "";
+strMODE25 = "";
+strMODE26 = "";
+strMODE27 = "";
+strMODE28 = "";
+strMODE29 = "";
+strHOURMINUTEDATA = "";
+function GetArduinoIO()
+{
+nocache = "&nocache=" + Math.random() * 1000000;
+var request = new XMLHttpRequest();
+request.onreadystatechange = function()
+{
+if (this.readyState == 4) {
+if (this.status == 200) {
+if (this.responseXML != null) {
+// XML file received - contains response values
+// get DateNow (based on gizduino code)
+var num_an = this.responseXML.getElementsByTagName('DateNow').length;
+for (count = 0; count < num_an; count++) {
+document.getElementsByClassName("DateNow")[count].innerHTML =
+this.responseXML.getElementsByTagName('DateNow')[count].childNodes[0].nodeValue;
+}
+// get TimeNow (based on gizduino code)
+var num_an = this.responseXML.getElementsByTagName('TimeNow').length;
+for (count = 0; count < num_an; count++) {
+document.getElementsByClassName("TimeNow")[count].innerHTML =
+this.responseXML.getElementsByTagName('TimeNow')[count].childNodes[0].nodeValue;
+}
+// get DEBUG (based on gizduino code)
+var num_an = this.responseXML.getElementsByTagName('DEBUG').length;
+for (count = 0; count < num_an; count++) {
+document.getElementsByClassName("DEBUG")[count].innerHTML =
+this.responseXML.getElementsByTagName('DEBUG')[count].childNodes[0].nodeValue;
+}
+// get MSG (based on gizduino code)
+var num_an = this.responseXML.getElementsByTagName('MSG').length;
+for (count = 0; count < num_an; count++) {
+document.getElementsByClassName("MSG")[count].innerHTML =
+this.responseXML.getElementsByTagName('MSG')[count].childNodes[0].nodeValue;
+}
+// get POWER (based on gizduino code)
+var num_an = this.responseXML.getElementsByTagName('POWER').length;
+for (count = 0; count < num_an; count++) {
+document.getElementsByClassName("POWER")[count].innerHTML =
+this.responseXML.getElementsByTagName('POWER')[count].childNodes[0].nodeValue;
+}
+// get SCHED (based on gizduino code)
+var num_an = this.responseXML.getElementsByTagName('SCHED').length;
+for (count = 0; count < num_an; count++) {
+document.getElementsByClassName("SCHED")[count].innerHTML =
+this.responseXML.getElementsByTagName('SCHED')[count].childNodes[0].nodeValue;
+}
+// LED 1 OUT chkbox
+if (this.responseXML.getElementsByTagName('LED')[0].childNodes[0].nodeValue === "checked") {
+document.LED_form.LED1.checked = true;
+}
+else {
+document.LED_form.LED1.checked = false;
+}
+// LED 2 OUT chkbox
+if (this.responseXML.getElementsByTagName('LED')[1].childNodes[0].nodeValue === "checked") {
+document.LED_form.LED2.checked = true;
+}
+else {
+document.LED_form.LED2.checked = false;
+}
+//-----------------------------------------------------end2-----------------------------------------------------
+}
+}
+}
+}
+// send HTTP GET request with LEDs to switch on/off if any
+request.open("GET", "ajax_inputs" + strLED1 + strLED2 +strAUTO1+strAUTO2+ strHOURMINUTEDATA + nocache, true);
+request.send(null);
+setTimeout('GetArduinoIO()', 1000);
+strLED1 = "";
+strLED2 = "";
+strAUTO1="";
+strAUTO2="";
+strHOURMINUTEDATA = "";
+}
+// service LEDs when checkbox checked/unchecked
+function GetCheck()
+{
+if (LED_form.LED1.checked) {
+strLED1 = "&LED1=1";
+}
+else {
+strLED1 = "&LED1=0";
+}
+if (LED_form.LED2.checked) {
+strLED2 = "&LED2=1";
+}
+else {
+strLED2 = "&LED2=0";
+}
+}
+function GetSlots09()
+{
+strAUTO1 = "&AUTO1=1";
+}
+//---------
+function GetSlots19()
+{
+strAUTO2 = "&AUTO2=1";
+}
+//---------
+function GetModes09()
+{
+if (AUTO1_form.MODE10.checked) {
+strMODE10 = "1";
+}
+else {
+strMODE10 = "0";
+}
+if (AUTO1_form.MODE11.checked) {
+strMODE11 = "1";
+}
+else {
+strMODE11 = "0";
+}
+if (AUTO1_form.MODE12.checked) {
+strMODE12 = "1";
+}
+else {
+strMODE12 = "0";
+}
+if (AUTO1_form.MODE13.checked) {
+strMODE13 = "1";
+}
+else {
+strMODE13 = "0";
+}
+if (AUTO1_form.MODE14.checked) {
+strMODE14 = "1";
+}
+else {
+strMODE14 = "0";
+}
+if (AUTO1_form.MODE15.checked) {
+strMODE15 = "1";
+}
+else {
+strMODE15 = "0";
+}
+if (AUTO1_form.MODE16.checked) {
+strMODE16 = "1";
+}
+else {
+strMODE16 = "0";
+}
+if (AUTO1_form.MODE17.checked) {
+strMODE17 = "1";
+}
+else {
+strMODE17 = "0";
+}
+if (AUTO1_form.MODE18.checked) {
+strMODE18 = "1";
+}
+else {
+strMODE18 = "0";
+}
+if (AUTO1_form.MODE19.checked) {
+strMODE19 = "1";
+}
+else {
+strMODE19 = "0";
+}
+}
+//------------------
+function GetModes19()
+{
+if (AUTO2_form.MODE20.checked) {
+strMODE20 = "1";
+}
+else {
+strMODE20 = "0";
+}
+if (AUTO2_form.MODE21.checked) {
+strMODE21 = "1";
+}
+else {
+strMODE21 = "0";
+}
+if (AUTO2_form.MODE22.checked) {
+strMODE22 = "1";
+}
+else {
+strMODE22 = "0";
+}
+if (AUTO2_form.MODE23.checked) {
+strMODE23 = "1";
+}
+else {
+strMODE23 = "0";
+}
+if (AUTO2_form.MODE24.checked) {
+strMODE24 = "1";
+}
+else {
+strMODE24 = "0";
+}
+if (AUTO2_form.MODE25.checked) {
+strMODE25 = "1";
+}
+else {
+strMODE25 = "0";
+}
+if (AUTO2_form.MODE26.checked) {
+strMODE26 = "1";
+}
+else {
+strMODE26 = "0";
+}
+if (AUTO2_form.MODE27.checked) {
+strMODE27 = "1";
+}
+else {
+strMODE27 = "0";
+}
+if (AUTO2_form.MODE28.checked) {
+strMODE28 = "1";
+}
+else {
+strMODE28 = "0";
+}
+if (AUTO2_form.MODE29.checked) {
+strMODE29 = "1";
+}
+else {
+strMODE29 = "0";
+}
+}
+//------------------
+function Set()
+{
+strHOURMINUTEDATA = "&HM=" + "a" + AUTO1_form.Hour10.value + "b" +
+AUTO1_form.Hour11.value + "c" +
+AUTO1_form.Hour12.value + "d" +
+AUTO1_form.Hour13.value + "e" +
+AUTO1_form.Hour14.value + "f" +
+AUTO1_form.Hour15.value + "g" +
+AUTO1_form.Hour16.value + "h" +
+AUTO1_form.Hour17.value + "i" +
+AUTO1_form.Hour18.value + "j" +
+AUTO1_form.Hour19.value + "k" +
+AUTO1_form.Minute10.value + "l" +
+AUTO1_form.Minute11.value + "m" +
+AUTO1_form.Minute12.value + "n" +
+AUTO1_form.Minute13.value + "o" +
+AUTO1_form.Minute14.value + "p" +
+AUTO1_form.Minute15.value + "q" +
+AUTO1_form.Minute16.value + "r" +
+AUTO1_form.Minute17.value + "s" +
+AUTO1_form.Minute18.value + "t" +
+AUTO1_form.Minute19.value + "u" +
+strMODE10+
+strMODE11+
+strMODE12+
+strMODE13+
+strMODE14+
+strMODE15+
+strMODE16+
+strMODE17+
+strMODE18+
+strMODE19+
+"&end";
+}
+function Set2()
+{
+strHOURMINUTEDATA = "&HM2=" + "a" + AUTO2_form.Hour20.value + "b" +
+AUTO2_form.Hour21.value + "c" +
+AUTO2_form.Hour22.value + "d" +
+AUTO2_form.Hour23.value + "e" +
+AUTO2_form.Hour24.value + "f" +
+AUTO2_form.Hour25.value + "g" +
+AUTO2_form.Hour26.value + "h" +
+AUTO2_form.Hour27.value + "i" +
+AUTO2_form.Hour28.value + "j" +
+AUTO2_form.Hour29.value + "k" +
+AUTO2_form.Minute20.value + "l" +
+AUTO2_form.Minute21.value + "m" +
+AUTO2_form.Minute22.value + "n" +
+AUTO2_form.Minute23.value + "o" +
+AUTO2_form.Minute24.value + "p" +
+AUTO2_form.Minute25.value + "q" +
+AUTO2_form.Minute26.value + "r" +
+AUTO2_form.Minute27.value + "s" +
+AUTO2_form.Minute28.value + "t" +
+AUTO2_form.Minute29.value + "u" +
+strMODE20+
+strMODE21+
+strMODE22+
+strMODE23+
+strMODE24+
+strMODE25+
+strMODE26+
+strMODE27+
+strMODE28+
+strMODE29+
+"&end";
+}
+function TestSms()
+{
+strHOURMINUTEDATA = "&SMSTEST=1";
+}
+function SaveSms()
+{
+if(document.getElementById('SMSFREQ').value == "Every hour") {
+strHOURMINUTEDATA = "&SMSFREQ=1";
+}
+if(document.getElementById('SMSFREQ').value == "Every 6 hours") {
+strHOURMINUTEDATA = "&SMSFREQ=2";
+}
+if(document.getElementById('SMSFREQ').value == "Everyday") {
+strHOURMINUTEDATA = "&SMSFREQ=3";
+}
+if(document.getElementById('SMSFREQ').value == "Every week") {
+strHOURMINUTEDATA = "&SMSFREQ=4";
+}
+if(document.getElementById('SMSFREQ').value == "Every month") {
+strHOURMINUTEDATA = "&SMSFREQ=5";
+}
+}
+  </script>
+  <meta content="Leslie S. Caminade" name="author">
+
+  <meta content="Control Interface for APMS" name="description">
+
+  <style>
+.button_class {
+height:30px;
+width: 150px;
+background: #6666dd;
+border-radius: 0px;
+transition-property: background;
+transition-duration: .5s;
+transition-timing-function: ease-out;
+}
+.button_class:hover {
+background: red;
+}
+  </style>
+</head>
+
+
+<body onload="GetArduinoIO()">
+
+<br style="font-weight: bold; text-decoration: underline; font-family: Tahoma;">
+
+<table style="font-family: Tahoma; background-color: rgb(193, 193, 193); text-align: left; margin-left: auto; margin-right: auto; height: 845px; width: 613px;" border="1" cellpadding="2" cellspacing="2">
+
+  <tbody>
+
+    <tr>
+
+      <td style="width: 50px;" colspan="2" rowspan="1">
+      <div style="text-align: center;"><img style="width: 602px; height: 120px;" alt="Automatic Power Management System Banner" src="banner.png"><span style="color: silver;"></span></div>
+
+      <span class="RTC"></span> </td>
+
+    </tr>
+
+    <tr align="center">
+
+      <td style="width: 50px;" colspan="2" rowspan="1"><span style="color: silver;"></span><span style="font-weight: bold; background-color: rgb(204, 204, 204);">DASHBOARD</span>&nbsp;
+ABOUT </td>
+
+    </tr>
+
+    <tr>
+
+      <td style="width: 50px;" colspan="2" rowspan="1">
+      <img style="border: 1px solid ; width: 18px; height: 18px;" alt="" src="time.png" hspace="1" vspace="1">:<span class="TimeNow">Loading... &nbsp; &nbsp;</span>
+      <img style="border: 1px solid ; width: 17px; height: 17px;" alt="" src="date.png" hspace="1" vspace="1"><span class="DateNow">Loading...&nbsp;</span> </td>
+
+    </tr>
+
+    <tr>
+
+      <td style="vertical-align: top; width: 555px;" colspan="1" rowspan="1">
+      <table style="text-align: left; width: 347px; height: 79px;" border="0" cellpadding="0" cellspacing="0">
+
+        <tbody>
+
+          <tr style="font-weight: bold;">
+
+            <td style="height: 20%; width: 167px;" colspan="1" rowspan="1">POWER MONITOR </td>
+
+            <td style="text-align: right; font-weight: normal;"><a href="log.txt" target="_blank" download=""><small>download
+log</small></a></td>
+
+          </tr>
+
+          <tr>
+
+            <td style="width: 170px;">POWER
+CH1</td>
+
+            <td style="text-align: right; width: 167px;"><span style="font-weight: bold;" class="POWER">...</span></td>
+
+          </tr>
+
+          <tr>
+
+            <td style="width: 170px;">POWER
+CH2</td>
+
+            <td style="text-align: right; width: 167px;"><span style="font-weight: bold;" class="POWER">...</span></td>
+
+          </tr>
+
+          <tr>
+
+            <td style="width: 170px;">POWER
+TOTAL</td>
+
+            <td style="text-align: right; width: 167px;"><span style="font-weight: bold;" class="POWER">...</span></td>
+
+          </tr>
+
+          <tr>
+
+            <td style="width: 170px;">ENERGY</td>
+
+            <td style="text-align: right; width: 167px;"><span style="font-weight: bold;" class="POWER">...</span></td>
+
+          </tr>
+
+        </tbody>
+      </table>
+
+      <span style="font-weight: bold;" class="ENERGY"></span></td>
+
+      <td style="vertical-align: top; width: 50px;"><span style="font-weight: bold;" class="ENERGY"></span>
+      <br>
+
+      <div style="text-align: right;"><span style="font-weight: bold;">MANUAL CONTROL</span><br>
+
+      <span style="font-weight: bold;"></span></div>
+
+      <span style="font-weight: bold;"></span>
+      <div style="text-align: right;">
+      <form style="margin-left: 0px; width: 256px;" id="check_led" name="LED_form"> <input name="LED1" value="0" onclick="GetCheck()" type="checkbox">CH1
+ON/OFF<br>
+
+        <input name="LED2" value="0" onclick="GetCheck()" type="checkbox"><span style="color: black;">CH2 ON/OFF<br>
+
+        <br>
+
+        </span> </form>
+
+      </div>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td style="width: 50px;" colspan="2" rowspan="1">
+      <form id="check_autosettings1" name="AUTO1_form">
+        <div style="text-align: center;">&nbsp;<input name="AUTO1" value="CHANNEL 1 AUTO" onclick="GetSlots09()" class="button_class" type="button"><span class="MSG" style="font-weight: bold;"> ???</span>
+        <table style="text-align: left; width: 591px; height: 149px;" border="1" cellpadding="5" cellspacing="0">
+
+          <tbody>
+
+            <tr>
+
+              <td colspan="5" rowspan="1">SCHEDULES:
+              <span style="font-weight: bold;" class="SCHED">...</span></td>
+
+            </tr>
+
+            <tr>
+
+              <td style="height: 74px;"><br>
+
+              <input name="MODE10" value="0" onclick="GetModes09()" type="checkbox">on/off<br>
+
+              <input placeholder="HH" maxlength="2" size="2" name="Hour10">:<input placeholder="MM" maxlength="2" size="2" name="Minute10"></td>
+
+              <td style="height: 74px;"><br>
+
+              <input name="MODE11" value="0" onclick="GetModes09()" type="checkbox">on/off<br>
+
+              <input placeholder="HH" maxlength="2" size="2" name="Hour11">:<input placeholder="MM" maxlength="2" size="2" name="Minute11"></td>
+
+              <td style="height: 74px;"><br>
+
+              <input name="MODE12" value="0" onclick="GetModes09()" type="checkbox">on/off<br>
+
+              <input placeholder="HH" maxlength="2" size="2" name="Hour12">:<input placeholder="MM" maxlength="2" size="2" name="Minute12"></td>
+
+              <td style="height: 74px;"><br>
+
+              <input name="MODE13" value="0" onclick="GetModes09()" type="checkbox">on/off<br>
+
+              <input placeholder="HH" maxlength="2" size="2" name="Hour13">:<input placeholder="MM" maxlength="2" size="2" name="Minute13"></td>
+
+              <td style="height: 74px;"><br>
+
+              <input name="MODE14" value="0" onclick="GetModes09()" type="checkbox">on/off<br>
+
+              <input placeholder="HH" maxlength="2" size="2" name="Hour14">:<input placeholder="MM" maxlength="2" size="2" name="Minute14"></td>
+
+            </tr>
+
+            <tr>
+
+              <td style="height: 77px;"><br>
+
+              <input name="MODE15" value="0" onclick="GetModes09()" type="checkbox">on/off<br>
+
+              <input placeholder="HH" maxlength="2" size="2" name="Hour15">:<input placeholder="MM" maxlength="2" size="2" name="Minute15"></td>
+
+              <td style="height: 77px;"><br>
+
+              <input name="MODE16" value="0" onclick="GetModes09()" type="checkbox">on/off<br>
+
+              <input placeholder="HH" maxlength="2" size="2" name="Hour16">:<input placeholder="MM" maxlength="2" size="2" name="Minute16"></td>
+
+              <td style="height: 77px;"><br>
+
+              <input name="MODE17" value="0" onclick="GetModes09()" type="checkbox">on/off<br>
+
+              <input placeholder="HH" maxlength="2" size="2" name="Hour17">:<input placeholder="MM" maxlength="2" size="2" name="Minute17"></td>
+
+              <td style="height: 77px;"><br>
+
+              <input name="MODE18" value="0" onclick="GetModes09()" type="checkbox">on/off<br>
+
+              <input placeholder="HH" maxlength="2" size="2" name="Hour18">:<input placeholder="MM" maxlength="2" size="2" name="Minute18"></td>
+
+              <td style="height: 77px;"><br>
+
+              <input name="MODE19" value="0" onclick="GetModes09()" type="checkbox">on/off<br>
+
+              <input placeholder="HH" maxlength="2" size="2" name="Hour19">:<input placeholder="MM" maxlength="2" size="2" name="Minute19"></td>
+
+            </tr>
+
+          </tbody>
+        </table>
+
+        <br>
+
+        <div style="text-align: right;"><input onclick="Set()" name="SetValues1" value="SAVE" class="button_class" type="button"></div>
+
+        </div>
+
+      </form>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td style="width: 50px;" colspan="2" rowspan="1">
+      <form id="check_autosettings2" name="AUTO2_form">
+        <div style="text-align: center;"> <input name="AUTO2" value="CHANNEL 2 AUTO" onclick="GetSlots19()" class="button_class" type="button"><span class="MSG" style="font-weight: bold;"> ???</span><br>
+
+        </div>
+
+        <table style="text-align: left; width: 591px; height: 152px;" border="1" cellpadding="5" cellspacing="0">
+
+          <tbody>
+
+            <tr>
+
+              <td colspan="5" rowspan="1">SCHEDULES:
+              <span style="font-weight: bold;" class="SCHED">...</span></td>
+
+            </tr>
+
+            <tr>
+
+              <td style="height: 72px;"><br>
+
+              <input name="MODE20" value="0" onclick="GetModes19()" type="checkbox">on/off<br>
+
+              <input placeholder="HH" maxlength="2" size="2" name="Hour20">:<input placeholder="MM" maxlength="2" size="2" name="Minute20"></td>
+
+              <td style="height: 72px;"><br>
+
+              <input name="MODE21" value="0" onclick="GetModes19()" type="checkbox">on/off<br>
+
+              <input placeholder="HH" maxlength="2" size="2" name="Hour21">:<input placeholder="MM" maxlength="2" size="2" name="Minute21"></td>
+
+              <td style="height: 72px;"><br>
+
+              <input name="MODE22" value="0" onclick="GetModes19()" type="checkbox">on/off<br>
+
+              <input placeholder="HH" maxlength="2" size="2" name="Hour22">:<input placeholder="MM" maxlength="2" size="2" name="Minute22"></td>
+
+              <td style="height: 72px;"><br>
+
+              <input name="MODE23" value="0" onclick="GetModes19()" type="checkbox">on/off<br>
+
+              <input placeholder="HH" maxlength="2" size="2" name="Hour23">:<input placeholder="MM" maxlength="2" size="2" name="Minute23"></td>
+
+              <td style="height: 72px;"><br>
+
+              <input name="MODE24" value="0" onclick="GetModes19()" type="checkbox">on/off<br>
+
+              <input placeholder="HH" maxlength="2" size="2" name="Hour24">:<input placeholder="MM" maxlength="2" size="2" name="Minute24"></td>
+
+            </tr>
+
+            <tr>
+
+              <td style="height: 80px;"><br>
+
+              <input name="MODE25" value="0" onclick="GetModes19()" type="checkbox">on/off<br>
+
+              <input placeholder="HH" maxlength="2" size="2" name="Hour25">:<input placeholder="MM" maxlength="2" size="2" name="Minute25"></td>
+
+              <td style="height: 80px;"><br>
+
+              <input name="MODE26" value="0" onclick="GetModes19()" type="checkbox">on/off<br>
+
+              <input placeholder="HH" maxlength="2" size="2" name="Hour26">:<input placeholder="MM" maxlength="2" size="2" name="Minute26"></td>
+
+              <td style="height: 80px;"><br>
+
+              <input name="MODE27" value="0" onclick="GetModes19()" type="checkbox">on/off<br>
+
+              <input placeholder="HH" maxlength="2" size="2" name="Hour27">:<input placeholder="MM" maxlength="2" size="2" name="Minute27"></td>
+
+              <td style="height: 80px;"><br>
+
+              <input name="MODE28" value="0" onclick="GetModes19()" type="checkbox">on/off<br>
+
+              <input placeholder="HH" maxlength="2" size="2" name="Hour28">:<input placeholder="MM" maxlength="2" size="2" name="Minute28"></td>
+
+              <td style="height: 80px;"><br>
+
+              <input name="MODE29" value="0" onclick="GetModes19()" type="checkbox">on/off<br>
+
+              <input placeholder="HH" maxlength="2" size="2" name="Hour29">:<input placeholder="MM" maxlength="2" size="2" name="Minute29"></td>
+
+            </tr>
+
+          </tbody>
+        </table>
+
+        <br>
+
+        <div style="text-align: right;"><span style="font-weight: bold;"><input onclick="Set2()" name="SetValues2" value="SAVE" class="button_class" type="button"></span><span style="font-weight: bold;" class="SCHED"></span>
+        </div>
+
+      </form>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <td style="text-align: right;" colspan="2" rowspan="1">
+      <form id="SMS" name="SMS_form">Send
+SMS every <input placeholder="HH" maxlength="4" size="4" name="SMSH">
+        <select name="SMSFREQ" id="SMSFREQ">
+        <option>Every hour</option>
+        <option>Every 6 hours</option>
+        <option>Everyday</option>
+        <option>Every week</option>
+        <option>Every month</option>
+        </select>
+
+hours&nbsp; <input name="SMS" value="SAVE" onclick="SaveSms()" class="button_class" type="button"><input name="TESTSMS" value="TEST" onclick="TestSms()" class="button_class" type="button"></form>
+
+      </td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+<div style="text-align: center; font-family: Tahoma;"><span class="DEBUG">debug</span></div>
+
+</body>
+</html>
